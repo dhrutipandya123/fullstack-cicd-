@@ -1,0 +1,14 @@
+
+# Environment variables and secrets
+backend/.env
+
+# Dependencies
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+
+# Build files
+frontend/dist/
+
+# Git
+.git/
