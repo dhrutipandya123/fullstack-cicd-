@@ -1,0 +1,42 @@
+
+name: Full Stack CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    name: Build Frontend and Backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install Frontend Dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build React Frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Install Backend Dependencies
+        working-directory: backend
+        run: npm ci
+
+      - name: Build Backend Docker Image
+        run: docker build -t fullstack-backend ./backend
+
+      - name: Build Frontend Docker Image
+        run: docker build -t fullstack-frontend ./frontend
